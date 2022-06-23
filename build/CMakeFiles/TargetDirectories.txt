@@ -1,0 +1,5 @@
+/Users/anonymous/Desktop/SudokuMFF/build/CMakeFiles/rebuild_cache.dir
+/Users/anonymous/Desktop/SudokuMFF/build/CMakeFiles/edit_cache.dir
+/Users/anonymous/Desktop/SudokuMFF/build/CMakeFiles/SudokuMFF.dir
+/Users/anonymous/Desktop/SudokuMFF/build/CMakeFiles/SudokuMFF_autogen_timestamp_deps.dir
+/Users/anonymous/Desktop/SudokuMFF/build/CMakeFiles/SudokuMFF_autogen.dir

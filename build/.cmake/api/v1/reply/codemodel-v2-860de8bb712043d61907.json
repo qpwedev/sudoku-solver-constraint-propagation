@@ -1,0 +1,78 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "SudokuMFF",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "SudokuMFF::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SudokuMFF-Debug-6b223195cdf369003c14.json",
+					"name" : "SudokuMFF",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "SudokuMFF_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SudokuMFF_autogen-Debug-93124b59eb6e9c5ce7fa.json",
+					"name" : "SudokuMFF_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "SudokuMFF_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SudokuMFF_autogen_timestamp_deps-Debug-88d05fd52d949846f851.json",
+					"name" : "SudokuMFF_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/anonymous/Desktop/SudokuMFF/build",
+		"source" : "/Users/anonymous/Desktop/SudokuMFF"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}
