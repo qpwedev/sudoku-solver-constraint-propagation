@@ -139,9 +139,73 @@ bool Sudoku::Backtrack(int row, int column, QVector<QVector<Cell>> & board){
     return false;
 }
 
+bool Sudoku::Elimination(QVector<QVector<Cell>> & board){
+    bool modified = false;
+
+    for (int row = 0; row < 9; row++)
+    {
+        for (int column = 0; column < 9; column++)
+        {
+            if (board[row][column].hasValue())
+            {
+                if (PropagateEliminationConstraint(row, column)){
+                    modified = true;
+                }
+            }
+        }
+    }
+
+    return modified;
+}
+
+bool Sudoku::PropagateEliminationConstraint(int numberRow, int numberColumn){
+    bool modified = false;
+    int number = board[numberRow][numberColumn].number;
+
+    // row number elimination
+    for (int column = 0; column < 9; ++column)
+    {
+        if (board[numberRow][column].deleteConstraintNumber(number))
+        {
+            modified = true;
+        }
+    }
+
+    // column number elimination
+
+    for (int row = 0; row < 9; ++row)
+    {
+        if (board[row][numberColumn].deleteConstraintNumber(number))
+        {
+            modified = true;
+        }
+    }
+
+    // square number elimination
+
+
+
+
+
+
+
+    return modified;
+}
+
+bool Sudoku::OnlyChoice(QVector<QVector<Cell>> & board){
+    return false;
+}
+
+bool Sudoku::ConstraintPropagation(QVector<QVector<Cell>> & board){
+    return Elimination(board) || OnlyChoice(board);
+
+}
+
 bool Sudoku::SolveBoard(QVector<QVector<Cell>> & board)
 {
-    if (Backtrack(0, 0 , board)){
+    while (ConstraintPropagation(board)){}
+
+    if (Backtrack(0, 0, board)){
         return true;
     }
     return false;

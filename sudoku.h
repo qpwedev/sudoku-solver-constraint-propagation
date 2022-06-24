@@ -7,21 +7,43 @@ class Sudoku
 {
 private:
     bool IsValidRow(int numberRow, int numberColumn, int number);
+
     bool IsValidSquare(int numberRow, int numberColumn, int number);
+
     bool IsValidColumn(int numberRow, int numberColumn, int number);
+
     bool Backtrack(int row, int column, QVector<QVector<Cell>> & board);
+
     const std::string SUDOKU_GRID_FILE_NAME = "../../../../sudoku_grid.txt";
 
 public:
     Sudoku();
+
     ~Sudoku();
+
     const int EMPTY = 0;
+
     const int MIN_LEVEL = 0;
+
     const int MAX_LEVEL = 50;
+
     QVector<QVector<Cell>> board;
+
     bool SolveBoard(QVector<QVector<Cell>> & board);
+
     bool IsValidPlace(int row, int column, int number);
+
     void LoadBoardFromFile(int board_number);
+
     bool IsValidBoard();
+
     bool IsNumber(const QString &str);
+
+    bool Elimination(QVector<QVector<Cell>> & board);
+
+    bool PropagateEliminationConstraint(int row, int column);
+
+    bool OnlyChoice(QVector<QVector<Cell>> & board);
+
+    bool ConstraintPropagation(QVector<QVector<Cell>> & board);
 };

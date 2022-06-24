@@ -19,20 +19,27 @@ public:
         this->isValid = true;
     }
 
-    bool has_value()
+    bool hasValue()
     {
         if (this->number != 0)
             return true;
         return false;
     }
 
-    void deleteConstraintNumber(int number)
+    bool deleteConstraintNumber(int number)
     {
         bool modified = false;
         auto it = find(possibleNumbers.begin(), possibleNumbers.end(), number);
         if (it != possibleNumbers.end())
         {
             possibleNumbers.erase(it);
+
+            if (possibleNumbers.size() == 1 && !this->hasValue()){
+                this->number = possibleNumbers[0];
+            }
+
+            modified = true;
         }
+        return modified;
     }
 };
