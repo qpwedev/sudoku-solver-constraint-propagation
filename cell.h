@@ -7,7 +7,7 @@ class Cell
 public:
     int number;
     std::vector<int> possibleNumbers;
-    bool isLoaded;
+    bool isFilled;
     bool isValid;
 
 public:
@@ -15,8 +15,12 @@ public:
     {
         this->number = number;
         possibleNumbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        this->isLoaded = false;
+        this->isFilled = false;
         this->isValid = true;
+    }
+
+    void loadNewValue()
+    {
     }
 
     bool hasValue()
@@ -34,7 +38,8 @@ public:
         {
             possibleNumbers.erase(it);
 
-            if (possibleNumbers.size() == 1 && !this->hasValue()){
+            if (possibleNumbers.size() == 1 && !this->hasValue())
+            {
                 this->number = possibleNumbers[0];
             }
 

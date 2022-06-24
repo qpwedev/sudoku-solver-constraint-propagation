@@ -55,7 +55,7 @@ public:
         if (sudokuTable->rowCount() < 9)
             sudokuTable->setRowCount(9);
         sudokuTable->setObjectName(QString::fromUtf8("sudokuTable"));
-        sudokuTable->setGeometry(QRect(150, 20, 450, 450));
+        sudokuTable->setGeometry(QRect(150, 10, 450, 450));
         QFont font1;
         font1.setPointSize(25);
         font1.setKerning(true);
@@ -89,25 +89,25 @@ public:
         solveButton->setGeometry(QRect(630, 30, 100, 32));
         line = new QFrame(centralwidget);
         line->setObjectName(QString::fromUtf8("line"));
-        line->setGeometry(QRect(280, 20, 40, 451));
+        line->setGeometry(QRect(280, 10, 40, 451));
         line->setLineWidth(3);
         line->setFrameShape(QFrame::VLine);
         line->setFrameShadow(QFrame::Sunken);
         line_2 = new QFrame(centralwidget);
         line_2->setObjectName(QString::fromUtf8("line_2"));
-        line_2->setGeometry(QRect(430, 20, 40, 451));
+        line_2->setGeometry(QRect(430, 10, 40, 451));
         line_2->setLineWidth(3);
         line_2->setFrameShape(QFrame::VLine);
         line_2->setFrameShadow(QFrame::Sunken);
         line_3 = new QFrame(centralwidget);
         line_3->setObjectName(QString::fromUtf8("line_3"));
-        line_3->setGeometry(QRect(150, 160, 451, 16));
+        line_3->setGeometry(QRect(150, 150, 451, 16));
         line_3->setLineWidth(3);
         line_3->setFrameShape(QFrame::HLine);
         line_3->setFrameShadow(QFrame::Sunken);
         line_4 = new QFrame(centralwidget);
         line_4->setObjectName(QString::fromUtf8("line_4"));
-        line_4->setGeometry(QRect(150, 310, 451, 16));
+        line_4->setGeometry(QRect(150, 300, 451, 16));
         line_4->setLineWidth(3);
         line_4->setFrameShape(QFrame::HLine);
         line_4->setFrameShadow(QFrame::Sunken);

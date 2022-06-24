@@ -12,7 +12,7 @@ private:
 
     bool IsValidColumn(int numberRow, int numberColumn, int number);
 
-    bool Backtrack(int row, int column, QVector<QVector<Cell>> & board);
+    bool Backtrack(int row, int column, QVector<QVector<Cell>> &board);
 
     const std::string SUDOKU_GRID_FILE_NAME = "../../../../sudoku_grid.txt";
 
@@ -21,7 +21,7 @@ public:
 
     ~Sudoku();
 
-    const int EMPTY = 0;
+    const int EMPTY_CELL_VALUE = 0;
 
     const int MIN_LEVEL = 0;
 
@@ -29,7 +29,9 @@ public:
 
     QVector<QVector<Cell>> board;
 
-    bool SolveBoard(QVector<QVector<Cell>> & board);
+    bool SolveBoard(QVector<QVector<Cell>> &board);
+
+    void CreateNewBoard();
 
     bool IsValidPlace(int row, int column, int number);
 
@@ -39,11 +41,18 @@ public:
 
     bool IsNumber(const QString &str);
 
-    bool Elimination(QVector<QVector<Cell>> & board);
+    bool Elimination(QVector<QVector<Cell>> &board);
 
-    bool PropagateEliminationConstraint(int row, int column);
+    bool PropagateEliminationConstraint(int row, int column, QVector<QVector<Cell>> &board);
 
-    bool OnlyChoice(QVector<QVector<Cell>> & board);
+    bool OnlyChoice(QVector<QVector<Cell>> &board);
 
-    bool ConstraintPropagation(QVector<QVector<Cell>> & board);
+    bool ConstraintPropagation(QVector<QVector<Cell>> &board);
+
+    bool OnlyChoiceRow(int numberRow,int numberColumn,int possibleNumber, QVector<QVector<Cell>> &board);
+
+    bool OnlyChoiceColumn(int numberRow,int numberColumn,int possibleNumber, QVector<QVector<Cell>> &board);
+
+    bool OnlyChoiceSquare(int numberRow,int numberColumn,int possibleNumber, QVector<QVector<Cell>> &board);
+
 };

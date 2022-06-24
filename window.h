@@ -34,12 +34,26 @@ private slots:
 
 private:
     Ui::Window *ui;
+
     Sudoku sudoku;
+
     void LoadLevelWindow();
+
     void populateSudokuTable();
+
     void createLoadedItem(int row, int column);
+
     void createEmptyItem(int row, int column);
+
     void sendNoSolutionMessage();
+
     void sendInvalidBoardMessage();
+
     void deselectAllCells();
+
+    const QColor DEFAULT_CELL_COLOR = QColor::fromRgb(162, 170, 173);
+
+    const QColor WRONG_CELL_COLOR = QColor::fromRgb(161, 40, 48);
+
+    const QColor SOLVED_CELL_COLOR = QColor::fromRgb(139, 0, 255);
 };

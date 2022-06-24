@@ -11,7 +11,8 @@ Window::Window(QWidget *parent)
     LoadLevelWindow();
 }
 
-void Window::populateSudokuTable(){
+void Window::populateSudokuTable()
+{
     for (int i = 0; i < 9; i++)
     {
         for (int j = 0; j < 9; j++)
@@ -35,8 +36,7 @@ void Window::on_resetButton_clicked()
 
 void Window::createEmptyItem(int row, int column)
 {
-    QColor color = QColor::fromRgb(162, 170, 173);
-    ui->sudokuTable->item(row, column)->setBackground(color);
+    ui->sudokuTable->item(row, column)->setBackground(DEFAULT_CELL_COLOR);
     ui->sudokuTable->item(row, column)->setTextAlignment(Qt::AlignCenter);
 }
 
@@ -49,63 +49,31 @@ void Window::createLoadedItem(int row, int column)
     ui->sudokuTable->item(row, column)->setFlags(ui->sudokuTable->item(row, column)->flags() ^ Qt::ItemIsEditable);
 }
 
-void Window::sendNoSolutionMessage(){
+void Window::sendNoSolutionMessage()
+{
     QMessageBox::information(
         this,
         tr("Sudoku"),
-        tr("There are no solutions for this configuratioin.") );
+        tr("There are no solutions for this configuratioin."));
 }
 
-void Window::sendInvalidBoardMessage(){
+void Window::sendInvalidBoardMessage()
+{
     QMessageBox::warning(
         this,
         tr("Sudoku"),
-        tr("The board is invalid. Try to fix it.") );
+        tr("The board is invalid. Try to fix it."));
 }
 
-void Window::deselectAllCells(){
-    for (int i = 0; i < 9; i++)
-    {
-        for (int j = 0; j < 9; j++)
-        {
-            ui->sudokuTable->item(i,j)->setSelected(false);
-        }
-    }
-}
-
-
-void Window::on_solveButton_clicked()
+void Window::deselectAllCells()
 {
-    if (!sudoku.IsValidBoard()){
-        sendInvalidBoardMessage();
-        return;
-    }
-
-    if (!sudoku.SolveBoard(sudoku.board))
-    {
-        sendNoSolutionMessage();
-        return;
-    }
-
-    deselectAllCells();
-
     for (int i = 0; i < 9; i++)
     {
         for (int j = 0; j < 9; j++)
         {
-            if (!sudoku.board[i][j].isLoaded)
-            {
-                QString str = QString::number(sudoku.board[i][j].number);
-                ui->sudokuTable->item(i, j)->setText(str);
-                QColor color = QColor::fromRgb(139, 0, 255);
-                ui->sudokuTable->item(i, j)->setBackground(color);
-                ui->sudokuTable->item(i, j)->setFlags(ui->sudokuTable->item(i, j)->flags() ^ Qt::ItemIsEditable);
-                ui->sudokuTable->item(i, j)->setSelected(false);               
-            }
-
+            ui->sudokuTable->item(i, j)->setSelected(false);
         }
     }
-    ui->sudokuTable->setSelectionMode(QAbstractItemView::NoSelection);
 }
 
 
@@ -141,14 +109,14 @@ void Window::LoadLevelWindow()
     {
         for (int j = 0; j < 9; j++)
         {
-            if (sudoku.board[i][j].number == sudoku.EMPTY)
+            if (sudoku.board[i][j].number == sudoku.EMPTY_CELL_VALUE)
             {
                 createEmptyItem(i, j);
             }
             else
             {
                 createLoadedItem(i, j);
-                sudoku.board[i][j].isLoaded = true;
+                sudoku.board[i][j].isFilled = true;
             }
         }
     }
@@ -161,41 +129,74 @@ void Window::on_sudokuTable_cellChanged(int row, int column)
     if (!sudoku.IsNumber(item->text()) || item->text().toInt() > 9 || item->text().toInt() < 1)
     {
         item->setText("");
-        sudoku.board[row][column].number = sudoku.EMPTY;
-        sudoku.board[row][column].isLoaded = false;
+        sudoku.board[row][column].number = sudoku.EMPTY_CELL_VALUE;
+        sudoku.board[row][column].isFilled = false;
         sudoku.board[row][column].isValid = true;
-        QColor color = QColor::fromRgb(162, 170, 173);
-        ui->sudokuTable->item(row, column)->setBackground(color);
+        ui->sudokuTable->item(row, column)->setBackground(DEFAULT_CELL_COLOR);
         return;
     }
     if (item->isSelected())
     {
         int number = item->text().toInt();
         sudoku.board[row][column].number = number;
-        sudoku.board[row][column].isLoaded = true;
-        if (!sudoku.IsValidPlace(row, column, number) && number != sudoku.EMPTY)
+        sudoku.board[row][column].isFilled = true;
+        if (!sudoku.IsValidPlace(row, column, number) && number != sudoku.EMPTY_CELL_VALUE)
         {
-            QColor color = QColor::fromRgb(161, 40, 48);
-            ui->sudokuTable->item(row, column)->setBackground(color);
+            ui->sudokuTable->item(row, column)->setBackground(WRONG_CELL_COLOR);
             sudoku.board[row][column].isValid = false;
         }
         else
         {
-            QColor color = QColor::fromRgb(162, 170, 173);
-            ui->sudokuTable->item(row, column)->setBackground(color);
+            ui->sudokuTable->item(row, column)->setBackground(DEFAULT_CELL_COLOR);
             sudoku.board[row][column].isValid = true;
         }
     }
 }
 
-void Window::on_hintButton_clicked()
+void Window::on_solveButton_clicked()
 {
-    if (!sudoku.IsValidBoard()){
+    if (!sudoku.IsValidBoard())
+    {
         sendInvalidBoardMessage();
         return;
     }
 
-    QVector<QVector<Cell>> & boardCopy(sudoku.board);
+    if (!sudoku.SolveBoard(sudoku.board))
+    {
+        sendNoSolutionMessage();
+        return;
+    }
+
+    deselectAllCells();
+
+    for (int row = 0; row < 9; ++row)
+    {
+        for (int column = 0; column < 9; ++column)
+        {
+            if (!sudoku.board[row][column].isFilled)
+            {
+                QString strNumber = QString::number(sudoku.board[row][column].number);
+                QTableWidgetItem *item = ui->sudokuTable->item(row, column);
+                item->setText(strNumber);
+                item->setBackground(SOLVED_CELL_COLOR);
+                item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+                item->setSelected(false);
+            }
+        }
+    }
+
+    ui->sudokuTable->setSelectionMode(QAbstractItemView::NoSelection);
+}
+
+void Window::on_hintButton_clicked()
+{
+    if (!sudoku.IsValidBoard())
+    {
+        sendInvalidBoardMessage();
+        return;
+    }
+
+    QVector<QVector<Cell>> &boardCopy(sudoku.board);
 
     if (!sudoku.SolveBoard(boardCopy))
     {
@@ -205,24 +206,25 @@ void Window::on_hintButton_clicked()
 
     deselectAllCells();
 
-    for (int i = 0; i < 9; i++)
+    for (int row = 0; row < 9; ++row)
     {
-        for (int j = 0; j < 9; j++)
+        for (int column = 0; column < 9; ++column)
         {
-            if (!boardCopy[i][j].isLoaded)
+            if (!boardCopy[row][column].isFilled)
             {
-                sudoku.board[i][j].number = boardCopy[i][j].number;
-                sudoku.board[i][j].isValid = true;
-                sudoku.board[i][j].isLoaded = true;
-                QString str = QString::number(sudoku.board[i][j].number);
-                ui->sudokuTable->item(i, j)->setText(str);
-                QColor color = QColor::fromRgb(139, 0, 255);
-                ui->sudokuTable->item(i, j)->setBackground(color);
-                ui->sudokuTable->item(i, j)->setFlags(ui->sudokuTable->item(i, j)->flags() ^ Qt::ItemIsEditable);
-                ui->sudokuTable->item(i, j)->setSelected(false);
+                sudoku.board[row][column].number = boardCopy[row][column].number;
+                sudoku.board[row][column].isValid = true;
+                sudoku.board[row][column].isFilled = true;
+
+                QString strNumber = QString::number(sudoku.board[row][column].number);
+
+                QTableWidgetItem *item = ui->sudokuTable->item(row, column);
+                item->setText(strNumber);
+                item->setBackground(SOLVED_CELL_COLOR);
+                item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+                item->setSelected(false);
                 return;
             }
         }
     }
 }
-
