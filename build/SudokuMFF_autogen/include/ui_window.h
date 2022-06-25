@@ -56,6 +56,15 @@ public:
             sudokuTable->setRowCount(9);
         sudokuTable->setObjectName(QString::fromUtf8("sudokuTable"));
         sudokuTable->setGeometry(QRect(150, 10, 450, 450));
+        QPalette palette;
+        QBrush brush(QColor(239, 246, 255, 255));
+        brush.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::Window, brush);
+        QBrush brush1(QColor(46, 47, 48, 255));
+        brush1.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Inactive, QPalette::Window, brush1);
+        palette.setBrush(QPalette::Disabled, QPalette::Window, brush);
+        sudokuTable->setPalette(palette);
         QFont font1;
         font1.setPointSize(25);
         font1.setKerning(true);
@@ -83,10 +92,10 @@ public:
         sudokuTable->verticalHeader()->setDefaultSectionSize(50);
         resetButton = new QPushButton(centralwidget);
         resetButton->setObjectName(QString::fromUtf8("resetButton"));
-        resetButton->setGeometry(QRect(630, 90, 100, 32));
+        resetButton->setGeometry(QRect(630, 40, 100, 32));
         solveButton = new QPushButton(centralwidget);
         solveButton->setObjectName(QString::fromUtf8("solveButton"));
-        solveButton->setGeometry(QRect(630, 30, 100, 32));
+        solveButton->setGeometry(QRect(20, 40, 100, 32));
         line = new QFrame(centralwidget);
         line->setObjectName(QString::fromUtf8("line"));
         line->setGeometry(QRect(280, 10, 40, 451));
@@ -123,7 +132,7 @@ public:
         incrementLevel->setGeometry(QRect(400, 470, 51, 32));
         hintButton = new QPushButton(centralwidget);
         hintButton->setObjectName(QString::fromUtf8("hintButton"));
-        hintButton->setGeometry(QRect(630, 60, 100, 32));
+        hintButton->setGeometry(QRect(20, 80, 100, 32));
         Window->setCentralWidget(centralwidget);
 
         retranslateUi(Window);

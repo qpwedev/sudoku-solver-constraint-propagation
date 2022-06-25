@@ -40,6 +40,43 @@
       <height>450</height>
      </rect>
     </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="Window">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>239</red>
+          <green>246</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="Window">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>46</red>
+          <green>47</green>
+          <blue>48</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="Window">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>239</red>
+          <green>246</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
+    </property>
     <property name="font">
      <font>
       <pointsize>25</pointsize>
@@ -132,7 +169,7 @@
     <property name="geometry">
      <rect>
       <x>630</x>
-      <y>90</y>
+      <y>40</y>
       <width>100</width>
       <height>32</height>
      </rect>
@@ -144,8 +181,8 @@
    <widget class="QPushButton" name="solveButton">
     <property name="geometry">
      <rect>
-      <x>630</x>
-      <y>30</y>
+      <x>20</x>
+      <y>40</y>
       <width>100</width>
       <height>32</height>
      </rect>
@@ -263,8 +300,8 @@
    <widget class="QPushButton" name="hintButton">
     <property name="geometry">
      <rect>
-      <x>630</x>
-      <y>60</y>
+      <x>20</x>
+      <y>80</y>
       <width>100</width>
       <height>32</height>
      </rect>
