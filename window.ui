@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>750</width>
+    <width>650</width>
     <height>500</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>750</width>
+    <width>650</width>
     <height>500</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>750</width>
+    <width>650</width>
     <height>500</height>
    </size>
   </property>
@@ -28,54 +28,17 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Window</string>
+   <string>Sudoku Solver</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTableWidget" name="sudokuTable">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>10</y>
+      <x>100</x>
+      <y>20</y>
       <width>450</width>
       <height>450</height>
      </rect>
-    </property>
-    <property name="palette">
-     <palette>
-      <active>
-       <colorrole role="Window">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>239</red>
-          <green>246</green>
-          <blue>255</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </active>
-      <inactive>
-       <colorrole role="Window">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>46</red>
-          <green>47</green>
-          <blue>48</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </inactive>
-      <disabled>
-       <colorrole role="Window">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>239</red>
-          <green>246</green>
-          <blue>255</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </disabled>
-     </palette>
     </property>
     <property name="font">
      <font>
@@ -168,9 +131,9 @@
    <widget class="QPushButton" name="resetButton">
     <property name="geometry">
      <rect>
-      <x>630</x>
+      <x>570</x>
       <y>40</y>
-      <width>100</width>
+      <width>61</width>
       <height>32</height>
      </rect>
     </property>
@@ -183,7 +146,7 @@
      <rect>
       <x>20</x>
       <y>40</y>
-      <width>100</width>
+      <width>61</width>
       <height>32</height>
      </rect>
     </property>
@@ -194,8 +157,8 @@
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>10</y>
+      <x>230</x>
+      <y>20</y>
       <width>40</width>
       <height>451</height>
      </rect>
@@ -210,8 +173,8 @@
    <widget class="Line" name="line_2">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>10</y>
+      <x>380</x>
+      <y>20</y>
       <width>40</width>
       <height>451</height>
      </rect>
@@ -226,8 +189,8 @@
    <widget class="Line" name="line_3">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>150</y>
+      <x>100</x>
+      <y>160</y>
       <width>451</width>
       <height>16</height>
      </rect>
@@ -242,8 +205,8 @@
    <widget class="Line" name="line_4">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>300</y>
+      <x>100</x>
+      <y>310</y>
       <width>451</width>
       <height>16</height>
      </rect>
@@ -258,8 +221,8 @@
    <widget class="QLabel" name="currentLevel">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>476</y>
+      <x>300</x>
+      <y>475</y>
       <width>51</width>
       <height>21</height>
      </rect>
@@ -274,7 +237,7 @@
    <widget class="QPushButton" name="decrementLevel">
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>260</x>
       <y>470</y>
       <width>51</width>
       <height>32</height>
@@ -287,7 +250,7 @@
    <widget class="QPushButton" name="incrementLevel">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>340</x>
       <y>470</y>
       <width>51</width>
       <height>32</height>
@@ -302,7 +265,7 @@
      <rect>
       <x>20</x>
       <y>80</y>
-      <width>100</width>
+      <width>61</width>
       <height>32</height>
      </rect>
     </property>

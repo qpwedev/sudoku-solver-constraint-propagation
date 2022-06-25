@@ -51,9 +51,11 @@ private:
 
     void deselectAllCells();
 
-    const QColor DEFAULT_CELL_COLOR = QColor::fromRgb(162, 170, 173);
+    const QColor DEFAULT_CELL_COLOR = QColor::fromRgb(66, 69, 79);
 
-    const QColor WRONG_CELL_COLOR = QColor::fromRgb(161, 40, 48);
+    const QColor WRONG_CELL_COLOR = QColor::fromRgb(187, 61, 61);
 
-    const QColor SOLVED_CELL_COLOR = QColor::fromRgb(139, 0, 255);
+    const QColor SOLVED_CELL_COLOR = QColor::fromRgb(117, 169, 243);
+
+    const QColor LOADED_CELL_COLOR = QColor::fromRgb(40, 41, 47);
 };

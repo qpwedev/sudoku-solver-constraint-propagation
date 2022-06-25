@@ -211,19 +211,25 @@ bool Sudoku::PropagateEliminationConstraint(int numberRow, int numberColumn, QVe
     return modified;
 }
 
-bool Sudoku::OnlyChoiceRow(int numberRow,int numberColumn,int possibleNumber, QVector<QVector<Cell>> &board){
+bool Sudoku::CheckOnlyChoiseExistance(int numberRow, int numberColumn, int possibleNumber, QVector<QVector<Cell>> &board){
+    // check row
     for (int column = 0; column < 9; ++column)
     {
         if ((column != numberColumn))
         {
-            if (board[numberRow][column].hasValue()){
-                if (board[numberRow][column].number == possibleNumber){
+            if (board[numberRow][column].hasValue())
+            {
+                if (board[numberRow][column].number == possibleNumber)
+                {
                     return false;
                 }
             }
-            else {
-                for (auto contenderNumber : board[numberRow][column].possibleNumbers){
-                    if (contenderNumber == possibleNumber){
+            else
+            {
+                for (auto contenderNumber : board[numberRow][column].possibleNumbers)
+                {
+                    if (contenderNumber == possibleNumber)
+                    {
                         return false;
                     }
                 }
@@ -231,22 +237,25 @@ bool Sudoku::OnlyChoiceRow(int numberRow,int numberColumn,int possibleNumber, QV
         }
     }
 
-    return true;
-}
 
-bool Sudoku::OnlyChoiceColumn(int numberRow,int numberColumn,int possibleNumber, QVector<QVector<Cell>> &board){
+    // check columnn
     for (int row = 0; row < 9; ++row)
     {
         if ((row != numberRow))
         {
-            if (board[row][numberColumn].hasValue()){
-                if (board[row][numberColumn].number == possibleNumber){
+            if (board[row][numberColumn].hasValue())
+            {
+                if (board[row][numberColumn].number == possibleNumber)
+                {
                     return false;
                 }
             }
-            else {
-                for (auto contenderNumber : board[row][numberColumn].possibleNumbers){
-                    if (contenderNumber == possibleNumber){
+            else
+            {
+                for (auto contenderNumber : board[row][numberColumn].possibleNumbers)
+                {
+                    if (contenderNumber == possibleNumber)
+                    {
                         return false;
                     }
                 }
@@ -254,10 +263,7 @@ bool Sudoku::OnlyChoiceColumn(int numberRow,int numberColumn,int possibleNumber,
         }
     }
 
-    return true;
-}
 
-bool Sudoku::OnlyChoiceSquare(int numberRow,int numberColumn,int possibleNumber, QVector<QVector<Cell>> &board){
     int initialRow = 3 * (numberRow / 3);
     int initialColumn = 3 * (numberColumn / 3);
 
@@ -268,14 +274,19 @@ bool Sudoku::OnlyChoiceSquare(int numberRow,int numberColumn,int possibleNumber,
             if (!(initialRow + i == numberRow && initialColumn + j == numberColumn))
             {
 
-                if (board[initialRow + i][initialColumn + j].hasValue()){
-                    if (board[initialRow + i][initialColumn + j].number == possibleNumber){
+                if (board[initialRow + i][initialColumn + j].hasValue())
+                {
+                    if (board[initialRow + i][initialColumn + j].number == possibleNumber)
+                    {
                         return false;
                     }
                 }
-                else {
-                    for (auto contenderNumber : board[initialRow + i][initialColumn + j].possibleNumbers){
-                        if (contenderNumber == possibleNumber){
+                else
+                {
+                    for (auto contenderNumber : board[initialRow + i][initialColumn + j].possibleNumbers)
+                    {
+                        if (contenderNumber == possibleNumber)
+                        {
                             return false;
                         }
                     }
@@ -287,6 +298,7 @@ bool Sudoku::OnlyChoiceSquare(int numberRow,int numberColumn,int possibleNumber,
     return true;
 }
 
+
 bool Sudoku::OnlyChoice(QVector<QVector<Cell>> &board)
 {
     bool modified = false;
@@ -297,9 +309,10 @@ bool Sudoku::OnlyChoice(QVector<QVector<Cell>> &board)
         {
             if (!board[row][column].hasValue())
             {
-                for (auto possibleNumber : board[row][column].possibleNumbers){
-                    if ((OnlyChoiceRow(row, column, possibleNumber, board) || OnlyChoiceColumn(row, column, possibleNumber, board) || OnlyChoiceSquare(row, column, possibleNumber, board))
-                            && IsValidPlace(row, column, possibleNumber)){
+                for (auto possibleNumber : board[row][column].possibleNumbers)
+                {
+                    if (CheckOnlyChoiseExistance(row, column, possibleNumber, board) && IsValidPlace(row, column, possibleNumber))
+                    {
                         board[row][column] = possibleNumber;
                         modified = true;
                         break;
@@ -313,7 +326,7 @@ bool Sudoku::OnlyChoice(QVector<QVector<Cell>> &board)
 }
 
 bool Sudoku::ConstraintPropagation(QVector<QVector<Cell>> &board)
-{    
+{
     bool modifiedElimination = Elimination(board);
     bool modifiedOnlyChoice = OnlyChoice(board);
 

@@ -49,10 +49,7 @@ public:
 
     bool ConstraintPropagation(QVector<QVector<Cell>> &board);
 
-    bool OnlyChoiceRow(int numberRow,int numberColumn,int possibleNumber, QVector<QVector<Cell>> &board);
+    bool CheckOnlyChoiseExistance(int numberRow, int numberColumn, int possibleNumber, QVector<QVector<Cell>> &board);
 
-    bool OnlyChoiceColumn(int numberRow,int numberColumn,int possibleNumber, QVector<QVector<Cell>> &board);
-
-    bool OnlyChoiceSquare(int numberRow,int numberColumn,int possibleNumber, QVector<QVector<Cell>> &board);
-
+    bool OnlyChoiceSquare(int numberRow, int numberColumn, int possibleNumber, QVector<QVector<Cell>> &board);
 };

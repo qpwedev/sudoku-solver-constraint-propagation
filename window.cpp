@@ -2,6 +2,8 @@
 #include "./ui_window.h"
 #include <QDebug>
 #include <QMessageBox>
+#include <tuple>
+#include <random>
 
 Window::Window(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::Window), sudoku()
@@ -43,8 +45,7 @@ void Window::createEmptyItem(int row, int column)
 void Window::createLoadedItem(int row, int column)
 {
     ui->sudokuTable->item(row, column)->setText(QString::number(sudoku.board[row][column].number));
-    QColor color = QColor::fromRgb(58, 58, 58);
-    ui->sudokuTable->item(row, column)->setBackground(color);
+    ui->sudokuTable->item(row, column)->setBackground(LOADED_CELL_COLOR);
     ui->sudokuTable->item(row, column)->setTextAlignment(Qt::AlignCenter);
     ui->sudokuTable->item(row, column)->setFlags(ui->sudokuTable->item(row, column)->flags() ^ Qt::ItemIsEditable);
 }
@@ -76,10 +77,9 @@ void Window::deselectAllCells()
     }
 }
 
-
-
 void Window::on_decrementLevel_clicked()
 {
+    // read label, decrement and chenge level if its a valid number
     int currentLevelInt = ui->currentLevel->text().toInt() - 1;
     if (currentLevelInt >= sudoku.MIN_LEVEL && currentLevelInt <= sudoku.MAX_LEVEL)
     {
@@ -91,6 +91,7 @@ void Window::on_decrementLevel_clicked()
 
 void Window::on_incrementLevel_clicked()
 {
+    // read label, increment and chenge level if its a valid number
     int currentLevelInt = ui->currentLevel->text().toInt() + 1;
     if (currentLevelInt >= sudoku.MIN_LEVEL && currentLevelInt <= sudoku.MAX_LEVEL)
     {
@@ -126,6 +127,7 @@ void Window::on_sudokuTable_cellChanged(int row, int column)
 {
     QTableWidgetItem *item = ui->sudokuTable->item(row, column);
 
+    // clean cell if entered number is invalid
     if (!sudoku.IsNumber(item->text()) || item->text().toInt() > 9 || item->text().toInt() < 1)
     {
         item->setText("");
@@ -135,6 +137,8 @@ void Window::on_sudokuTable_cellChanged(int row, int column)
         ui->sudokuTable->item(row, column)->setBackground(DEFAULT_CELL_COLOR);
         return;
     }
+
+    // actualize board, check for valid place and color accordingly
     if (item->isSelected())
     {
         int number = item->text().toInt();
@@ -175,6 +179,7 @@ void Window::on_solveButton_clicked()
         {
             if (!sudoku.board[row][column].isFilled)
             {
+                // actualize board and make cell not editable
                 QString strNumber = QString::number(sudoku.board[row][column].number);
                 QTableWidgetItem *item = ui->sudokuTable->item(row, column);
                 item->setText(strNumber);
@@ -206,25 +211,46 @@ void Window::on_hintButton_clicked()
 
     deselectAllCells();
 
+    std::vector<std::tuple<int, int>> solvedCellsCoordinates;
+
+    // populate vector with solved cells
     for (int row = 0; row < 9; ++row)
     {
         for (int column = 0; column < 9; ++column)
         {
             if (!boardCopy[row][column].isFilled)
             {
-                sudoku.board[row][column].number = boardCopy[row][column].number;
-                sudoku.board[row][column].isValid = true;
-                sudoku.board[row][column].isFilled = true;
-
-                QString strNumber = QString::number(sudoku.board[row][column].number);
-
-                QTableWidgetItem *item = ui->sudokuTable->item(row, column);
-                item->setText(strNumber);
-                item->setBackground(SOLVED_CELL_COLOR);
-                item->setFlags(item->flags() ^ Qt::ItemIsEditable);
-                item->setSelected(false);
-                return;
+                solvedCellsCoordinates.push_back(std::make_tuple(row, column));
             }
         }
     }
+
+    if (solvedCellsCoordinates.size() == 0)
+    {
+        return;
+    }
+
+    // choose random solved cell
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> distr(0, solvedCellsCoordinates.size() - 1);
+    int randomVectorIndex = distr(gen);
+
+    std::tuple<int, int> solvedCellCoordinates = solvedCellsCoordinates[distr(gen)];
+
+    int row = std::get<0>(solvedCellsCoordinates[randomVectorIndex]);
+    int column = std::get<1>(solvedCellsCoordinates[randomVectorIndex]);
+
+    // actualize real board
+    sudoku.board[row][column].number = boardCopy[row][column].number;
+    sudoku.board[row][column].isValid = true;
+    sudoku.board[row][column].isFilled = true;
+
+    // actualize board
+    QString strNumber = QString::number(sudoku.board[row][column].number);
+    QTableWidgetItem *item = ui->sudokuTable->item(row, column);
+    item->setText(strNumber);
+    item->setBackground(SOLVED_CELL_COLOR);
+    item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+    item->setSelected(false);
 }
