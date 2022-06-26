@@ -48,11 +48,11 @@ void Sudoku::CreateNewBoard()
     board = newBoard;
 }
 
-bool Sudoku::IsValidRow(int numberRow, int numberColumn, int number)
+bool Sudoku::IsValidRow(int rowNumber, int columnNumber, int number)
 {
     for (int column = 0; column < 9; ++column)
     {
-        if (column != numberColumn && board[numberRow][column].number == number)
+        if (column != columnNumber && board[rowNumber][column].number == number)
         {
             return false;
         }
@@ -60,11 +60,11 @@ bool Sudoku::IsValidRow(int numberRow, int numberColumn, int number)
     return true;
 }
 
-bool Sudoku::IsValidColumn(int numberRow, int numberColumn, int number)
+bool Sudoku::IsValidColumn(int rowNumber, int columnNumber, int number)
 {
     for (int row = 0; row < 9; ++row)
     {
-        if (row != numberRow && board[row][numberColumn].number == number)
+        if (row != rowNumber && board[row][columnNumber].number == number)
         {
             return false;
         }
@@ -72,16 +72,16 @@ bool Sudoku::IsValidColumn(int numberRow, int numberColumn, int number)
     return true;
 }
 
-bool Sudoku::IsValidSquare(int numberRow, int numberColumn, int number)
+bool Sudoku::IsValidSquare(int rowNumber, int columnNumber, int number)
 {
-    int row = 3 * (numberRow / 3);
-    int column = 3 * (numberColumn / 3);
+    int row = 3 * (rowNumber / 3);
+    int column = 3 * (columnNumber / 3);
 
     for (int i = 0; i < 3; ++i)
     {
         for (int j = 0; j < 3; ++j)
         {
-            if ((row + i != numberRow || column + j != numberColumn) && (board[row + i][column + j].number == number))
+            if ((row + i != rowNumber || column + j != columnNumber) && (board[row + i][column + j].number == number))
             {
                 return false;
             }
@@ -170,15 +170,15 @@ bool Sudoku::Elimination(QVector<QVector<Cell>> &board)
     return modified;
 }
 
-bool Sudoku::PropagateEliminationConstraint(int numberRow, int numberColumn, QVector<QVector<Cell>> &board)
+bool Sudoku::PropagateEliminationConstraint(int rowNumber, int columnNumber, QVector<QVector<Cell>> &board)
 {
     bool modified = false;
-    int number = board[numberRow][numberColumn].number;
+    int number = board[rowNumber][columnNumber].number;
 
     // row number elimination
     for (int column = 0; column < 9; ++column)
     {
-        if ((column != numberColumn) && board[numberRow][column].deleteConstraintNumber(number))
+        if ((column != columnNumber) && board[rowNumber][column].deleteConstraintNumber(number))
         {
             modified = true;
         }
@@ -187,21 +187,21 @@ bool Sudoku::PropagateEliminationConstraint(int numberRow, int numberColumn, QVe
     // column number elimination
     for (int row = 0; row < 9; ++row)
     {
-        if ((row != numberRow) && board[row][numberColumn].deleteConstraintNumber(number))
+        if ((row != rowNumber) && board[row][columnNumber].deleteConstraintNumber(number))
         {
             modified = true;
         }
     }
 
     // square number elimination
-    int initialRow = 3 * (numberRow / 3);
-    int initialColumn = 3 * (numberColumn / 3);
+    int initialRow = 3 * (rowNumber / 3);
+    int initialColumn = 3 * (columnNumber / 3);
 
     for (int i = 0; i < 3; ++i)
     {
         for (int j = 0; j < 3; ++j)
         {
-            if (!(initialRow + i == numberRow && initialColumn + j == numberColumn) && board[initialRow + i][initialColumn + j].deleteConstraintNumber(number))
+            if (!(initialRow + i == rowNumber && initialColumn + j == columnNumber) && board[initialRow + i][initialColumn + j].deleteConstraintNumber(number))
             {
                 modified = true;
             }
@@ -211,22 +211,23 @@ bool Sudoku::PropagateEliminationConstraint(int numberRow, int numberColumn, QVe
     return modified;
 }
 
-bool Sudoku::CheckOnlyChoiseExistance(int numberRow, int numberColumn, int possibleNumber, QVector<QVector<Cell>> &board){
+bool Sudoku::CheckOnlyChoiseExistance(int rowNumber, int columnNumber, int possibleNumber, QVector<QVector<Cell>> &board)
+{
     // check row
     for (int column = 0; column < 9; ++column)
     {
-        if ((column != numberColumn))
+        if ((column != columnNumber))
         {
-            if (board[numberRow][column].hasValue())
+            if (board[rowNumber][column].hasValue())
             {
-                if (board[numberRow][column].number == possibleNumber)
+                if (board[rowNumber][column].number == possibleNumber)
                 {
                     return false;
                 }
             }
             else
             {
-                for (auto contenderNumber : board[numberRow][column].possibleNumbers)
+                for (auto contenderNumber : board[rowNumber][column].possibleNumbers)
                 {
                     if (contenderNumber == possibleNumber)
                     {
@@ -236,23 +237,22 @@ bool Sudoku::CheckOnlyChoiseExistance(int numberRow, int numberColumn, int possi
             }
         }
     }
-
 
     // check columnn
     for (int row = 0; row < 9; ++row)
     {
-        if ((row != numberRow))
+        if ((row != rowNumber))
         {
-            if (board[row][numberColumn].hasValue())
+            if (board[row][columnNumber].hasValue())
             {
-                if (board[row][numberColumn].number == possibleNumber)
+                if (board[row][columnNumber].number == possibleNumber)
                 {
                     return false;
                 }
             }
             else
             {
-                for (auto contenderNumber : board[row][numberColumn].possibleNumbers)
+                for (auto contenderNumber : board[row][columnNumber].possibleNumbers)
                 {
                     if (contenderNumber == possibleNumber)
                     {
@@ -263,15 +263,14 @@ bool Sudoku::CheckOnlyChoiseExistance(int numberRow, int numberColumn, int possi
         }
     }
 
-
-    int initialRow = 3 * (numberRow / 3);
-    int initialColumn = 3 * (numberColumn / 3);
+    int initialRow = 3 * (rowNumber / 3);
+    int initialColumn = 3 * (columnNumber / 3);
 
     for (int i = 0; i < 3; ++i)
     {
         for (int j = 0; j < 3; ++j)
         {
-            if (!(initialRow + i == numberRow && initialColumn + j == numberColumn))
+            if (!(initialRow + i == rowNumber && initialColumn + j == columnNumber))
             {
 
                 if (board[initialRow + i][initialColumn + j].hasValue())
@@ -297,7 +296,6 @@ bool Sudoku::CheckOnlyChoiseExistance(int numberRow, int numberColumn, int possi
 
     return true;
 }
-
 
 bool Sudoku::OnlyChoice(QVector<QVector<Cell>> &board)
 {

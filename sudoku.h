@@ -6,11 +6,11 @@
 class Sudoku
 {
 private:
-    bool IsValidRow(int numberRow, int numberColumn, int number);
+    bool IsValidRow(int rowNumber, int columnNumber, int number);
 
-    bool IsValidSquare(int numberRow, int numberColumn, int number);
+    bool IsValidSquare(int rowNumber, int columnNumber, int number);
 
-    bool IsValidColumn(int numberRow, int numberColumn, int number);
+    bool IsValidColumn(int rowNumber, int columnNumber, int number);
 
     bool Backtrack(int row, int column, QVector<QVector<Cell>> &board);
 
@@ -49,7 +49,7 @@ public:
 
     bool ConstraintPropagation(QVector<QVector<Cell>> &board);
 
-    bool CheckOnlyChoiseExistance(int numberRow, int numberColumn, int possibleNumber, QVector<QVector<Cell>> &board);
+    bool CheckOnlyChoiseExistance(int rowNumber, int columnNumber, int possibleNumber, QVector<QVector<Cell>> &board);
 
-    bool OnlyChoiceSquare(int numberRow, int numberColumn, int possibleNumber, QVector<QVector<Cell>> &board);
+    bool OnlyChoiceSquare(int rowNumber, int columnNumber, int possibleNumber, QVector<QVector<Cell>> &board);
 };
