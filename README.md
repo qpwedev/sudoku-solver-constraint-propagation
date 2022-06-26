@@ -3,6 +3,8 @@
 
 **Goal**: Create a sudoku solver with the constraint propagatin, the ability to find out the next right step and highlighting the wrong choice.
 
+<img src="img/Preview.jpg">
+
 # Documentation
 
 ## Launching 
@@ -30,9 +32,13 @@ Alternately apply Elimination and OnlyChoice until they stop changing the state 
 
 If a cell has a value, remove from all possible values of cells by row, column and square this value.
 
+<img src="img/Elimination.jpg">
+
 #### `OnlyChoice`
 
 If the cell has the only possible value for a row, column or square, set this value to the cell.
+
+<img src="img/OnlyChoice.jpg">
 
 #### `Backtrack`
 
